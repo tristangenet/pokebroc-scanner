@@ -2,6 +2,12 @@
 
 Application web mobile-first pour scanner, identifier et estimer les cartes Pokémon vendues en brocante.
 
+Routes principales :
+
+- `/` – page d'accueil avec explications et bouton « Commencer un scan »
+- `/scan` – interface de prise de photo
+- `/historique` – liste des derniers scans (utilisateur authentifié)
+
 ## Démarrage
 
 ```bash

@@ -15,7 +15,7 @@ export default function App() {
         <Route path="/scan" element={<ScanPage />} />
         <Route path="/price" element={<PricePage />} />
         <Route path="/result" element={<ResultPage />} />
-        <Route path="/history" element={<HistoryPage />} />
+        <Route path="/historique" element={<HistoryPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>

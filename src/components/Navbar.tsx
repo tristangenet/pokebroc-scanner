@@ -7,7 +7,7 @@ export default function Navbar() {
     <nav className="bg-accent text-white p-3 md:p-4 flex justify-between items-center text-sm md:text-base shadow">
       <Link to="/" className="font-bold">PokéBroc</Link>
       <div className="space-x-2 md:space-x-4">
-        <Link to="/history" className="hover:underline">Historique</Link>
+        <Link to="/historique" className="hover:underline">Historique</Link>
         {user ? (
           <button onClick={signOut} className="hover:underline">Déconnexion</button>
         ) : (
