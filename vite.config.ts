@@ -1,12 +1,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
-import qrcode from 'vite-plugin-qrcode';
+import { vitePluginQrcode } from 'vite-plugin-qrcode';
 
 export default defineConfig({
   plugins: [
     react(),
-    qrcode(), // Affiche un QR code dans le terminal au démarrage
+    vitePluginQrcode(), // ✅ QR code au démarrage
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['pwa-192x192.png', 'pwa-512x512.png', 'apple-touch-icon.png'],
