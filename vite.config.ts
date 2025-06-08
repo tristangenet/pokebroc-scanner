@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
-import vitePluginQrcode from 'vite-plugin-qrcode';
+
+// Import compatible CommonJS (évite l’erreur TypeScript)
+const vitePluginQrcode = require('vite-plugin-qrcode');
 
 export default defineConfig({
   plugins: [
     react(),
-    vitePluginQrcode(), // ✅ QR code au démarrage
+    vitePluginQrcode(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['pwa-192x192.png', 'pwa-512x512.png', 'apple-touch-icon.png'],
