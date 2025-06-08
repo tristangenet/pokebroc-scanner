@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-const { fetchEbayPrices, fetchCardmarketPrices, fetchVintedPrices, computeStats } = require('./priceScraper');
+import express from 'express';
+import cors from 'cors';
+import { fetchEbayPrices, fetchCardmarketPrices, fetchVintedPrices, computeStats } from './priceScraper.js';
 
 const app = express();
 app.use(cors());

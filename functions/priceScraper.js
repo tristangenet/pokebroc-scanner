@@ -1,5 +1,8 @@
-const cheerio = require('cheerio');
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+import * as cheerio from 'cheerio';
+
+// Node 18+ provides a global `fetch` implementation so we rely on that
+// to avoid an additional dependency. If running on an older Node version,
+// consider installing `node-fetch`.
 
 async function fetchEbayPrices(query) {
   const url = `https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(query)}&LH_Sold=1&_sop=13&_ipg=10`;
@@ -58,4 +61,4 @@ function computeStats(prices) {
   return { low, avg, high };
 }
 
-module.exports = { fetchEbayPrices, fetchCardmarketPrices, fetchVintedPrices, computeStats };
+export { fetchEbayPrices, fetchCardmarketPrices, fetchVintedPrices, computeStats };
