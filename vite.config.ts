@@ -1,9 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+<<<<<<< ours
 
 // IMPORTER LE PLUGIN PROPREMENT DEPUIS UN COMMONJS
 const vitePluginQrcode = require('vite-plugin-qrcode').default;
+=======
+import { qrcode as vitePluginQrcode } from 'vite-plugin-qrcode';
+>>>>>>> theirs
 
 export default defineConfig({
   plugins: [
