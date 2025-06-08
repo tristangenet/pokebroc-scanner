@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar';
 import FakeAlert from '../components/FakeAlert';
 import Tesseract from 'tesseract.js';
+import { detectCounterfeit, AuthenticityStatus } from '../utils/fakeDetector';
 
 interface CardResult {
   name: string;
@@ -10,6 +11,7 @@ interface CardResult {
   number: string;
   image: string;
   rarity: string;
+  authenticity: AuthenticityStatus;
 }
 
 export default function ScanPage() {
@@ -53,6 +55,7 @@ export default function ScanPage() {
       number: card.number,
       image: card.images.small,
       rarity: card.rarity || '',
+      authenticity: 'unknown',
     };
   }
 
@@ -76,8 +79,14 @@ export default function ScanPage() {
       setOcrText(data.text);
       const cleaned = cleanText(data.text);
       const card = await fetchCard(cleaned);
+      let authenticity: AuthenticityStatus = 'unknown';
+      try {
+        authenticity = await detectCounterfeit(canvas);
+      } catch (e) {
+        console.error('Authenticity check failed', e);
+      }
       if (card) {
-        navigate('/result', { state: card });
+        navigate('/result', { state: { ...card, authenticity } });
       } else {
         setError('Carte non trouvée');
       }

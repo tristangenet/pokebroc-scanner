@@ -1,11 +1,20 @@
 import { Link, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import CardInfo from '../components/CardInfo';
+import AuthenticityIndicator from '../components/AuthenticityIndicator';
+import { AuthenticityStatus } from '../utils/fakeDetector';
 
 export default function ResultPage() {
   const location = useLocation();
   const card = location.state as
-    | { name: string; set: string; number: string; image: string; rarity: string }
+    | {
+        name: string;
+        set: string;
+        number: string;
+        image: string;
+        rarity: string;
+        authenticity?: AuthenticityStatus;
+      }
     | undefined;
 
   return (
@@ -14,13 +23,16 @@ export default function ResultPage() {
       <div className="p-4 text-center space-y-4">
         <h1 className="text-xl font-semibold">Résultat du scan</h1>
         {card ? (
-          <CardInfo
-            name={card.name}
-            set={card.set}
-            number={card.number}
-            image={card.image}
-            rarity={card.rarity}
-          />
+          <>
+            <CardInfo
+              name={card.name}
+              set={card.set}
+              number={card.number}
+              image={card.image}
+              rarity={card.rarity}
+            />
+            <AuthenticityIndicator status={card.authenticity ?? 'unknown'} />
+          </>
         ) : (
           <p>Aucune carte trouvée.</p>
         )}
