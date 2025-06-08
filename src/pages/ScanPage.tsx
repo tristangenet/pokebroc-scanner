@@ -1,16 +1,83 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar';
 import FakeAlert from '../components/FakeAlert';
+import Tesseract from 'tesseract.js';
 
 export default function ScanPage() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [ocrText, setOcrText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    async function enableCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' },
+        });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      } catch (err) {
+        setError("Accès à la caméra impossible");
+      }
+    }
+    enableCamera();
+  }, []);
+
+  async function capture() {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    setLoading(true);
+    setError('');
+    try {
+      const { data } = await Tesseract.recognize(
+        canvas.toDataURL('image/png'),
+        'eng'
+      );
+      setOcrText(data.text);
+    } catch (e) {
+      setError('Erreur OCR');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div>
       <Navbar />
-      <div className="p-4 text-center">
-        <h1 className="text-xl font-semibold mb-4">Scanner une carte</h1>
-        <FakeAlert message="Prise de photo non disponible" />
-        <p className="mb-4">(Fonctionnalité de scan à implémenter)</p>
-        <Link to="/" className="text-blue-600 underline">
+      <div className="p-4 text-center space-y-4">
+        <h1 className="text-xl font-semibold">Scanner une carte</h1>
+        {error && <FakeAlert message={error} />}
+        <video
+          ref={videoRef}
+          autoPlay
+          className="mx-auto w-full max-w-xs bg-black rounded"
+        />
+        <button
+          onClick={capture}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
+          Prendre une photo
+        </button>
+        <canvas ref={canvasRef} className="hidden" />
+        {loading && <p>Analyse en cours...</p>}
+        {ocrText && (
+          <div className="mt-4">
+            <h2 className="font-semibold">Texte détecté :</h2>
+            <pre className="whitespace-pre-wrap text-left">{ocrText}</pre>
+          </div>
+        )}
+        <Link to="/" className="text-blue-600 underline block">
           Retour à l'accueil
         </Link>
       </div>
