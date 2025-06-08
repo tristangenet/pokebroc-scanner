@@ -7,6 +7,7 @@ Application web mobile-first pour scanner, identifier et estimer les cartes Pok√
 ```bash
 npm install
 npm run dev
+npm run server
 ```
 
 Ouvrez ensuite l'URL locale indiqu√©e par Vite pour tester sur mobile (PWA installable).
