@@ -1,18 +1,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
-<<<<<<< ours
-
-// IMPORTER LE PLUGIN PROPREMENT DEPUIS UN COMMONJS
-const vitePluginQrcode = require('vite-plugin-qrcode').default;
-=======
-import { qrcode as vitePluginQrcode } from 'vite-plugin-qrcode';
->>>>>>> theirs
+import qrcode from 'vite-plugin-qrcode';
 
 export default defineConfig({
   plugins: [
     react(),
-    vitePluginQrcode(), // ✅ maintenant c’est bien une fonction
+    qrcode(), // Affiche un QR code dans le terminal au démarrage
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['pwa-192x192.png', 'pwa-512x512.png', 'apple-touch-icon.png'],
