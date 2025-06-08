@@ -35,7 +35,7 @@ export default function HistoryPage() {
 
   if (!user) {
     return (
-      <div>
+      <div className="min-h-screen bg-gradient-to-b from-primary/20 to-white">
         <Navbar />
         <div className="p-4 text-center max-w-md mx-auto">
           <p>Connectez-vous pour voir votre historique.</p>
@@ -57,7 +57,7 @@ export default function HistoryPage() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-b from-primary/20 to-white">
       <Navbar />
       <div className="p-4 space-y-2 max-w-md mx-auto">
         <h1 className="text-xl font-semibold mb-4 text-center">
@@ -69,7 +69,7 @@ export default function HistoryPage() {
               <p>{item.name}</p>
               <button
                 onClick={() => toggleFav(item)}
-                className="text-sm text-blue-600 underline"
+                className="text-sm text-accent underline"
               >
                 {item.favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
               </button>

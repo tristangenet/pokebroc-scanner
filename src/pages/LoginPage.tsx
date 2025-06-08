@@ -20,13 +20,13 @@ export default function LoginPage() {
 
   if (user) {
     return (
-      <div>
+      <div className="min-h-screen bg-gradient-to-b from-primary/20 to-white">
         <Navbar />
         <div className="p-4 text-center space-y-4 max-w-sm mx-auto">
           <p className="mb-4">Connecté en tant que {user.email}</p>
           <button
             onClick={signOut}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            className="px-4 py-2 bg-accent text-white rounded shadow"
           >
             Se déconnecter
           </button>
@@ -36,7 +36,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-b from-primary/20 to-white">
       <Navbar />
       <div className="p-4 text-center space-y-4 max-w-sm mx-auto">
         <h1 className="text-xl font-semibold">Connexion</h1>
@@ -65,14 +65,14 @@ export default function LoginPage() {
           />
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded w-full"
+            className="px-4 py-2 bg-accent text-white rounded w-full shadow"
           >
             {register ? 'Créer un compte' : 'Se connecter'}
           </button>
         </form>
         <button
           onClick={() => setRegister(!register)}
-          className="text-blue-600 underline"
+          className="text-accent underline"
         >
           {register ? 'J\'ai déjà un compte' : 'Créer un compte'}
         </button>

@@ -37,7 +37,7 @@ export default function ResultPage() {
   }, [user, card]);
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-b from-primary/20 to-white">
       <Navbar />
       <div className="p-4 text-center space-y-4 max-w-md mx-auto">
         <h1 className="text-xl font-semibold">Résultat du scan</h1>
@@ -55,9 +55,7 @@ export default function ResultPage() {
         ) : (
           <p>Aucune carte trouvée.</p>
         )}
-        <Link to="/" className="text-blue-600 underline block">
-          Retour à l'accueil
-        </Link>
+        <Link to="/" className="text-accent underline block">Retour à l'accueil</Link>
       </div>
     </div>
   );

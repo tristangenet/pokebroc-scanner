@@ -98,7 +98,7 @@ export default function ScanPage() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-b from-primary/20 to-white">
       <Navbar />
       <div className="p-4 text-center space-y-4 max-w-md mx-auto">
         <h1 className="text-xl font-semibold">Scanner une carte</h1>
@@ -110,7 +110,7 @@ export default function ScanPage() {
         />
         <button
           onClick={capture}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
+          className="px-4 py-2 bg-accent text-white rounded shadow"
         >
           Prendre une photo
         </button>
@@ -122,9 +122,7 @@ export default function ScanPage() {
             <pre className="whitespace-pre-wrap text-left">{ocrText}</pre>
           </div>
         )}
-        <Link to="/" className="text-blue-600 underline block">
-          Retour à l'accueil
-        </Link>
+        <Link to="/" className="text-accent underline block">Retour à l'accueil</Link>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ export default function PricePage() {
   }, [card]);
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-b from-primary/20 to-white">
       <Navbar />
       <div className="p-4 text-center max-w-md mx-auto space-y-2">
         <h1 className="text-xl font-semibold mb-4">Estimation de prix</h1>
@@ -38,7 +38,7 @@ export default function PricePage() {
         ) : (
           <p>Chargement...</p>
         )}
-        <Link to="/" className="text-blue-600 underline mt-4 block">Retour</Link>
+        <Link to="/" className="text-accent underline mt-4 block">Retour</Link>
       </div>
     </div>
   );
