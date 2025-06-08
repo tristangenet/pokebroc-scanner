@@ -20,6 +20,9 @@ export default function ScanPage() {
   const [ocrText, setOcrText] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [manualName, setManualName] = useState('');
+  const [manualSet, setManualSet] = useState('');
+  const [manualNumber, setManualNumber] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,9 +45,14 @@ export default function ScanPage() {
     return text.replace(/[^a-zA-Z0-9 ]/g, ' ').split('\n')[0].trim();
   }
 
-  async function fetchCard(name: string): Promise<CardResult | null> {
+  async function fetchCard(name?: string, set?: string, number?: string): Promise<CardResult | null> {
+    const qParts = [] as string[];
+    if (name) qParts.push(`name:"${name}"`);
+    if (set) qParts.push(`set.name:"${set}"`);
+    if (number) qParts.push(`number:"${number}"`);
+    const q = qParts.join(' ');
     const resp = await fetch(
-      `https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(name)}"&pageSize=1`
+      `https://api.pokemontcg.io/v2/cards?q=${encodeURIComponent(q)}&pageSize=1`
     );
     const json = await resp.json();
     const card = json.data?.[0];
@@ -57,6 +65,21 @@ export default function ScanPage() {
       rarity: card.rarity || '',
       authenticity: 'unknown',
     };
+  }
+
+  async function searchManual() {
+    setLoading(true);
+    setError('');
+    try {
+      const card = await fetchCard(manualName, manualSet, manualNumber);
+      if (card) {
+        navigate('/result', { state: { ...card, authenticity: 'unknown' } });
+      } else {
+        setError('Carte non trouvée');
+      }
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function capture() {
@@ -114,6 +137,35 @@ export default function ScanPage() {
         >
           Prendre une photo
         </button>
+        <div className="space-y-2">
+          <input
+            type="text"
+            placeholder="Nom"
+            value={manualName}
+            onChange={(e) => setManualName(e.target.value)}
+            className="border p-2 rounded w-full"
+          />
+          <input
+            type="text"
+            placeholder="Série"
+            value={manualSet}
+            onChange={(e) => setManualSet(e.target.value)}
+            className="border p-2 rounded w-full"
+          />
+          <input
+            type="text"
+            placeholder="Numéro"
+            value={manualNumber}
+            onChange={(e) => setManualNumber(e.target.value)}
+            className="border p-2 rounded w-full"
+          />
+          <button
+            onClick={searchManual}
+            className="px-4 py-2 bg-accent text-white rounded shadow w-full"
+          >
+            Rechercher
+          </button>
+        </div>
         <canvas ref={canvasRef} className="hidden" />
         {loading && <p>Analyse en cours...</p>}
         {ocrText && (

@@ -53,6 +53,25 @@ async function fetchVintedPrices(query) {
   }
 }
 
+async function fetchLeboncoinPrices(query) {
+  const url = `https://www.leboncoin.fr/recherche?text=${encodeURIComponent(query)}`;
+  try {
+    const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    const html = await res.text();
+    const $ = cheerio.load(html);
+    const prices = [];
+    $('span[data-qa-id="aditem_price"]').each((i, el) => {
+      if (i >= 10) return false;
+      const text = $(el).text();
+      const m = text.match(/([0-9,.]+)/);
+      if (m) prices.push(parseFloat(m[1].replace(/,/g, '.')));
+    });
+    return { prices, url };
+  } catch (e) {
+    return { prices: [], url };
+  }
+}
+
 function computeStats(prices) {
   if (!prices.length) return null;
   const low = Math.min(...prices);
@@ -61,4 +80,10 @@ function computeStats(prices) {
   return { low, avg, high };
 }
 
-export { fetchEbayPrices, fetchCardmarketPrices, fetchVintedPrices, computeStats };
+export {
+  fetchEbayPrices,
+  fetchCardmarketPrices,
+  fetchVintedPrices,
+  fetchLeboncoinPrices,
+  computeStats,
+};
