@@ -33,4 +33,7 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=...
 VITE_FIREBASE_APP_ID=...
 ```
 
+Si ces variables ne sont pas renseignées, les fonctionnalités d'authentification
+seront désactivées et aucune donnée ne sera enregistrée dans Firebase.
+
 Si aucune clé n'est fournie, l'algorithme retournera simplement un résultat « Inconnu ».

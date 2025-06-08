@@ -23,7 +23,7 @@ export default function HistoryPage() {
   const [history, setHistory] = useState<ScanItem[]>([]);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || !db) return;
     const q = query(
       collection(db, 'users', user.uid, 'history'),
       orderBy('createdAt', 'desc')
@@ -45,12 +45,14 @@ export default function HistoryPage() {
   }
 
   function toggleFav(item: ScanItem) {
+    if (!db || !user) return;
     updateDoc(doc(db, 'users', user.uid, 'history', item.id), {
       favorite: !item.favorite,
     });
   }
 
   function updateNote(item: ScanItem, note: string) {
+    if (!db || !user) return;
     updateDoc(doc(db, 'users', user.uid, 'history', item.id), { note });
   }
 

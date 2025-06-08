@@ -23,7 +23,7 @@ export default function ResultPage() {
     | undefined;
 
   useEffect(() => {
-    if (!user || !card) return;
+    if (!user || !card || !db) return;
     addDoc(collection(db, 'users', user.uid, 'history'), {
       name: card.name,
       set: card.set,
