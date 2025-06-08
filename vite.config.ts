@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
-import { vitePluginQrcode } from 'vite-plugin-qrcode';
+import vitePluginQrcode from 'vite-plugin-qrcode';
 
 export default defineConfig({
   plugins: [
