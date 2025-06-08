@@ -1,8 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar';
 import FakeAlert from '../components/FakeAlert';
 import Tesseract from 'tesseract.js';
+
+interface CardResult {
+  name: string;
+  set: string;
+  number: string;
+  image: string;
+  rarity: string;
+}
 
 export default function ScanPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -10,6 +18,7 @@ export default function ScanPage() {
   const [ocrText, setOcrText] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function enableCamera() {
@@ -26,6 +35,26 @@ export default function ScanPage() {
     }
     enableCamera();
   }, []);
+
+  function cleanText(text: string): string {
+    return text.replace(/[^a-zA-Z0-9 ]/g, ' ').split('\n')[0].trim();
+  }
+
+  async function fetchCard(name: string): Promise<CardResult | null> {
+    const resp = await fetch(
+      `https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(name)}"&pageSize=1`
+    );
+    const json = await resp.json();
+    const card = json.data?.[0];
+    if (!card) return null;
+    return {
+      name: card.name,
+      set: card.set.series,
+      number: card.number,
+      image: card.images.small,
+      rarity: card.rarity || '',
+    };
+  }
 
   async function capture() {
     const video = videoRef.current;
@@ -45,6 +74,13 @@ export default function ScanPage() {
         'eng'
       );
       setOcrText(data.text);
+      const cleaned = cleanText(data.text);
+      const card = await fetchCard(cleaned);
+      if (card) {
+        navigate('/result', { state: card });
+      } else {
+        setError('Carte non trouvée');
+      }
     } catch (e) {
       setError('Erreur OCR');
     } finally {
