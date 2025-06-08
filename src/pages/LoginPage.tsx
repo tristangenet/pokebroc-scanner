@@ -22,7 +22,7 @@ export default function LoginPage() {
     return (
       <div>
         <Navbar />
-        <div className="p-4 text-center space-y-4">
+        <div className="p-4 text-center space-y-4 max-w-sm mx-auto">
           <p className="mb-4">Connecté en tant que {user.email}</p>
           <button
             onClick={signOut}
@@ -38,7 +38,7 @@ export default function LoginPage() {
   return (
     <div>
       <Navbar />
-      <div className="p-4 text-center space-y-4">
+      <div className="p-4 text-center space-y-4 max-w-sm mx-auto">
         <h1 className="text-xl font-semibold">Connexion</h1>
         <button
           onClick={signInWithGoogle}

@@ -39,7 +39,7 @@ export default function ResultPage() {
   return (
     <div>
       <Navbar />
-      <div className="p-4 text-center space-y-4">
+      <div className="p-4 text-center space-y-4 max-w-md mx-auto">
         <h1 className="text-xl font-semibold">Résultat du scan</h1>
         {card ? (
           <>

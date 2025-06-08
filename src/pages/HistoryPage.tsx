@@ -37,7 +37,7 @@ export default function HistoryPage() {
     return (
       <div>
         <Navbar />
-        <div className="p-4 text-center">
+        <div className="p-4 text-center max-w-md mx-auto">
           <p>Connectez-vous pour voir votre historique.</p>
         </div>
       </div>
@@ -57,7 +57,7 @@ export default function HistoryPage() {
   return (
     <div>
       <Navbar />
-      <div className="p-4">
+      <div className="p-4 space-y-2 max-w-md mx-auto">
         <h1 className="text-xl font-semibold mb-4 text-center">
           Historique des scans
         </h1>

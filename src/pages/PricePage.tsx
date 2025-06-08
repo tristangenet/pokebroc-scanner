@@ -28,7 +28,7 @@ export default function PricePage() {
   return (
     <div>
       <Navbar />
-      <div className="p-4 text-center">
+      <div className="p-4 text-center max-w-md mx-auto space-y-2">
         <h1 className="text-xl font-semibold mb-4">Estimation de prix</h1>
         {stats ? (
           <>

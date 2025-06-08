@@ -100,7 +100,7 @@ export default function ScanPage() {
   return (
     <div>
       <Navbar />
-      <div className="p-4 text-center space-y-4">
+      <div className="p-4 text-center space-y-4 max-w-md mx-auto">
         <h1 className="text-xl font-semibold">Scanner une carte</h1>
         {error && <FakeAlert message={error} />}
         <video

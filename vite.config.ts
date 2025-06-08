@@ -7,6 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      includeAssets: ['pwa-192x192.png', 'pwa-512x512.png', 'apple-touch-icon.png'],
       manifest: {
         name: 'PokéBroc Scanner',
         short_name: 'PokéBroc',
