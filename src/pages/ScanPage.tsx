@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import FakeAlert from '../components/FakeAlert';
 import Tesseract from 'tesseract.js';
 import { detectCounterfeit, AuthenticityStatus } from '../utils/fakeDetector';
+import { matchCardImage } from '../utils/imageMatcher';
 
 interface CardResult {
   name: string;
@@ -101,7 +102,20 @@ export default function ScanPage() {
       );
       setOcrText(data.text);
       const cleaned = cleanText(data.text);
-      const card = await fetchCard(cleaned);
+      let card: CardResult | null = null;
+      const local = await matchCardImage(canvas);
+      if (local) {
+        card = {
+          name: local.name,
+          set: local.set,
+          number: local.number,
+          image: local.imagePath,
+          rarity: '',
+          authenticity: 'unknown',
+        };
+      } else {
+        card = await fetchCard(cleaned);
+      }
       let authenticity: AuthenticityStatus = 'unknown';
       try {
         authenticity = await detectCounterfeit(canvas);
